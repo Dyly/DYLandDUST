@@ -1,0 +1,102 @@
+package com.pong.objects;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.util.LinkedList;
+
+import com.pong.framework.GameObject;
+import com.pong.framework.ObjectID;
+import com.pong.framework.Player;
+
+public class PaddleBlock extends GameObject{
+
+	private static final int SIZE = 32;
+	private static int baseDamage = 10;
+	private Color playerColor;
+	private static final int MAXHEALTH = 40; //make health divisible by 10
+	private int health;
+	private boolean alive = true;
+	private int num;
+	private Player owner;
+	private Color color;
+	
+	public PaddleBlock(float x, float y, ObjectID id, int num, Player player) {
+
+		super(x, y+(SIZE*num), id);
+		this.owner = player;
+		this.num = num;
+		this.health = getMaxhealth();
+		System.out.println("Block #" + num + " created for Player " + owner + " at " + this.y);
+		
+		playerColor = (owner == Player.One) ? Color.blue : Color.gray;
+	}
+	
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+		if(this.health <= 0) this.setAlive(false);
+	}
+
+	public boolean isAlive() {
+		return alive;
+	}
+
+	public void setAlive(boolean alive) {
+		this.alive = alive;
+	}
+	
+	public Player getOwner() {
+		return owner;
+	}
+
+	public static int getSize() {
+		return SIZE;
+	}
+
+	public void setOwner(Player owner) {
+		this.owner = owner;
+	}
+
+	@Override
+	public void tick(LinkedList<GameObject> object) {
+		y += yVel;
+	}
+
+	@Override
+	public void render(Graphics g) {
+		
+		//Only render blocks which are alive
+		if(this.isAlive()){
+			if(health == getMaxhealth()){
+				color = playerColor;
+			}else if(health <= getMaxhealth()-(baseDamage*3)){
+				color = Color.red;
+			}else if(health <= getMaxhealth()-(baseDamage*2)){
+				color = Color.orange;
+			}else{
+				color = Color.yellow;
+			}
+			
+			g.setColor(color);
+			g.fillRect((int)x, (int)y, SIZE, SIZE);
+			
+			Graphics2D g2d = (Graphics2D) g;
+			g.setColor(Color.black);
+			g2d.draw((Rectangle)getBounds());
+		}
+	}
+
+	@Override
+	public Object getBounds() {
+		return new Rectangle((int)x, (int)y, SIZE, SIZE);
+	}
+
+	public static int getMaxhealth() {
+		return MAXHEALTH;
+	}	
+}

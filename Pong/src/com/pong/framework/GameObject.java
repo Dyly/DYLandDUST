@@ -3,8 +3,6 @@ package com.pong.framework;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
-import com.pong.window.Game;
-
 public abstract class GameObject {
 
 	protected float x, y;

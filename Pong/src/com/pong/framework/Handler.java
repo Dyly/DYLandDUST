@@ -36,7 +36,7 @@ public class Handler {
 	}
 	
 	public void newBall(){
-		addObject(new Ball(Game.WIDTH/2,Game.HEIGHT/4,10, 10, this, ObjectID.Ball));
+		addObject(new Ball(Game.WIDTH/2,Game.HEIGHT/4,15, 15, this, ObjectID.Ball));
 	}
 	
 //	public void createWorld(){

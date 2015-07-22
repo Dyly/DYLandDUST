@@ -16,8 +16,8 @@ import javafx.scene.shape.Circle;
 
 public class Ball extends GameObject{
 
-	private int HEIGHT = 10;
-	private int WIDTH = 10;
+	private int HEIGHT = 20;
+	private int WIDTH = 20;
 	private final float MAX_FALL_SPEED = 20;
 	private final float MIN_TRAVERSE_SPEED = 5;
 	private final float MAX_TRAVERSE_SPEED = 20;
@@ -63,28 +63,12 @@ public class Ball extends GameObject{
 		x += xVel;
 		y += yVel;
 		
-//		if(falling){
-//			yVel += gravity;
-//			
-//			if(Math.abs(yVel) > MAX_FALL_SPEED && yVel > 0){
-//				yVel = MAX_FALL_SPEED;
-//			}else if(Math.abs(yVel) > MAX_FALL_SPEED && yVel < 0){
-//				yVel = -MAX_FALL_SPEED;
-//			}
-//		}
-		
 		if(Math.abs(xVel) > MAX_TRAVERSE_SPEED && xVel > 0){
 			xVel = MAX_TRAVERSE_SPEED;
 		}else if(Math.abs(xVel) > MAX_TRAVERSE_SPEED && xVel < 0){
 			xVel = -MAX_TRAVERSE_SPEED;
 		}
 		
-//		//Stop ball from escaping horizontally, for debugging
-//		if( this.x > Game.WIDTH || this.x < 0){
-//			xVel = xVel * -1;
-//		}
-		
-		//Stop ball from escaping vertically
 		if( this.y > Game.HEIGHT || this.y < 0){
 			yVel = yVel * -1;
 		}
@@ -97,7 +81,7 @@ public class Ball extends GameObject{
 	public void render(Graphics g) {
 		
 		g.setColor(Color.yellow);
-		g.fillOval((int)x,(int) y, WIDTH, HEIGHT);
+		g.fillOval((int)x,(int) y, this.WIDTH, this.HEIGHT);
 			
 	}
 
@@ -126,11 +110,11 @@ public class Ball extends GameObject{
 					PaddleBlock currentBlock = (PaddleBlock) list.get(j);
 					
 					if(currentBlock.isAlive()){
-						if(intersectCirc(getBounds(), list.get(j).getBounds())){
+						if(intersectCirc(getBounds(), currentBlock.getBounds())){
 							if(pad.getOwner() == Player.One){
-								x = PaddleBlock.getSize()+3;
+								x = PaddleBlock.getSize()+50;
 							}else{
-								x = Game.WIDTH-PaddleBlock.getSize()-3;
+								x = Game.WIDTH-PaddleBlock.getSize()-50;
 							}
 							
 							currentBlock.setHealth(currentBlock.getHealth() - 10);

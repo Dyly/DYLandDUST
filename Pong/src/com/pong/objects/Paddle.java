@@ -6,10 +6,13 @@ import com.pong.framework.GameObject;
 import com.pong.framework.Handler;
 import com.pong.framework.ObjectID;
 import com.pong.framework.Player;
+import com.pong.window.Game;
 
 public class Paddle extends GameObject{
 
-	private static final int size = 7;
+	private static final int size = 150;
+	private static final int cols = 5;
+	private static final int rows = (int) size/cols;
 	private boolean alive = true;
 	@SuppressWarnings("unused")
 	private Handler handler;
@@ -22,8 +25,25 @@ public class Paddle extends GameObject{
 		super(x,y,id);
 		
 		block = new LinkedList<>();
-		for(int i = 0; i < size; i++){
-			block.add(new PaddleBlock(x,y,ObjectID.PaddleBlock, i, player));
+		int i = 0;
+		if(player == Player.One){
+		for(int j = 0; j < cols; j++){
+			for(int z= 0; z < rows; z++){
+				block.add(new PaddleBlock(x+(PaddleBlock.getSize()*j),y+(PaddleBlock.getSize()*z),ObjectID.PaddleBlock, i, player));
+				i++;
+				
+				}
+			}
+		}else{
+			
+			int playerTwoAdjustX = Game.WIDTH-(cols*PaddleBlock.getSize());
+
+				for(int j = 0; j < cols; j++){
+					for(int z= 0; z < rows; z++){
+						block.add(new PaddleBlock(playerTwoAdjustX+(PaddleBlock.getSize()*j),y+(PaddleBlock.getSize()*z),ObjectID.PaddleBlock, i, player));
+						i++;
+					}
+				}
 		}
 		
 		this.setOwner(player);

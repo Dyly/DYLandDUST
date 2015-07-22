@@ -12,7 +12,7 @@ import com.pong.framework.Player;
 
 public class PaddleBlock extends GameObject{
 
-	private static final int SIZE = 32;
+	private static final int SIZE = 10;
 	private static int baseDamage = 10;
 	private Color playerColor;
 	private static final int MAXHEALTH = 40; //make health divisible by 10
@@ -24,7 +24,8 @@ public class PaddleBlock extends GameObject{
 	
 	public PaddleBlock(float x, float y, ObjectID id, int num, Player player) {
 
-		super(x, y+(SIZE*num), id);
+//		super(x, y+(SIZE*num), id);
+		super(x, y, id);
 		this.owner = player;
 		this.num = num;
 		this.health = getMaxhealth();
